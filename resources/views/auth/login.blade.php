@@ -1,53 +1,60 @@
 <x-guest-layout>
-    <x-slot name="logo">
-        <img src="/logo.png" alt="No se encontró el logo" class="w-1/2 h-1/2">
-    </x-slot>
-    <!-- Session Status -->
+    <x-authentication-card>
+        <x-slot name="logo">
+            <img src="/logo2.png" alt="No se encontró el logo" class="w-1/2 h-1/2">
+        </x-slot>
 
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Correo')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        @session('status')
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ $value }}
         </div>
+        @endsession
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Contrasena')" />
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="relative overflow-hidden text-center w-full rounded-md">
+                <div class="relative flex flex-col  shadow-sm rounded-lg p-2 text-white">
+                    Autenticarse para iniciar sesión
+                    @error('suspendido')
+                    <div class="text-red-500">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
+            <div>
+                <x-label for="email" value="{{ __('Correo') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autofocus autocomplete="username" />
+                @error('email')
+                <div class="text-red-500">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Contraseña') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" autocomplete="current-password" />
+                @error('password')
+                <div class="text-red-500">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="block mt-4">
+                <label for="remember_me" class="flex items-center">
+                    <x-checkbox id="remember_me" name="remember" />
+                    <span class="ms-2 text-sm text-white">{{ __('Recordarme') }}</span>
+                </label>
+            </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Recuerdame') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Olvidaste tu contrasena') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Iniciar sesion') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <div class="flex items-center justify-end mt-4">
+                <x-button class="ms-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/></svg>
+                    {{ __('Acceder') }}
+                </x-button>
+            </div>
+        </form>
+    </x-authentication-card>
 </x-guest-layout>
