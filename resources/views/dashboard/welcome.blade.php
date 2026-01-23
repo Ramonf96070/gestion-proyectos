@@ -7,4 +7,5 @@
         <h1>Panel de Control</h1>
         <p>Bienvenido {{ auth()->user()->name }}</p>
     </div>
+
 @endsection
