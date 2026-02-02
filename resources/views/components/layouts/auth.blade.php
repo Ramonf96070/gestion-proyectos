@@ -1,3 +1,35 @@
+@php
+    $estados = [
+        [
+            'nombre' => 'Nuevo',
+            'text' => 'text-yellow-400',
+            'border' => 'hover:border-yellow-400',
+            'badge_bg' => 'bg-yellow-900',
+            'badge_text' => 'text-yellow-300',
+        ],
+        [
+            'nombre' => 'En Proceso',
+            'text' => 'text-orange-400',
+            'border' => 'hover:border-orange-400',
+            'badge_bg' => 'bg-orange-900',
+            'badge_text' => 'text-orange-300',
+        ],
+        [
+            'nombre' => 'En Espera',
+            'text' => 'text-purple-400',
+            'border' => 'hover:border-purple-400',
+            'badge_bg' => 'bg-purple-900',
+            'badge_text' => 'text-purple-300',
+        ],
+        [
+            'nombre' => 'Completado',
+            'text' => 'text-green-400',
+            'border' => 'hover:border-green-400',
+            'badge_bg' => 'bg-green-900',
+            'badge_text' => 'text-green-300',
+        ],
+    ];
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -14,17 +46,19 @@
     <!-- Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100">
-<div class="min-h-screen flex">
+<body class="bg-[#0F1115] m-0 p-0 overflow-hidden">
+<div class="h-screen flex w-screen">
 
     {{-- Sidebar --}}
     <x-layouts.menu />
 
     {{-- Main --}}
-    <main class="flex-1 p-6">
-        {{ $slot }}
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+            {{ $slot }}
+        </div>
     </main>
 
 </div>
-</body>
+</>
 </html>
